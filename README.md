@@ -1,103 +1,136 @@
 # Jerry Social Media Module
 
-This Node.js module provides functionalities to simulate social media interactions such as posting messages and images, retrieving user profiles, and managing comments and likes.
+This Node.js module simulates social media interactions, allowing users to create accounts, post messages and images, interact with posts through comments and likes, and more.
 
 ## Installation
 
 There's no specific installation process required for this module. Simply include the module in your project and require it as follows:
 
 ```javascript
-const socialMediaModule = require('./Jerry_SocialMediaModule.js');
+const socialMediaModule = require('./Jerry_SocialMedia.js');
 ```
 
 # Usage
 
 To utilize the functionalities of the Social Media Module, follow the examples below:
 
-## Post Messages and Images to Social Media
+## Create new user
+
+This function creates a new user with the specified details and returns the user's information.<br>
+Takes in userId, name, password, and profilePicUrl as parameters.
 
 ```javascript
-const newpost = socialMediaModule.postToSocialMedia('Shrek', 'Watch Shrek', 'https://images.app.goo.gl/7WRoYL5KxiKLfEGx7');
-console.log('New Post:', newpost);
+const newUser = socialMediaModule.createUser('User1', 'Name', 'User1', 'https://google.com');
+console.log('New User:', newUser);
+``` 
 
-```
-### Parameters:
-- **_'Shrek'_** : User ID of the person making the post.<br>
-- **_'Watch Shrek'_** : Message content of the post.<br>
-- **_'https://images.app.goo.gl/7WRoYL5KxiKLfEGx7'_** : URL of the image attached to the post.
+## Login
 
-## Get User Profile
+The login function is used to log in a user. <br>
+Takes userId and password as parameters and returns the result of the login attempt.
 
 ```javascript
-const finduser = socialMediaModule.getUserProfile('Shrek');
-console.log('User:', finduser);
-```
+const login = socialMediaModule.login('Shrek', 'Shrek1');
+console.log('Login Result:', login);
+``` 
 
-### Parameters:
-- **_'Shrek'_** : User ID for which the profile is retrieved.
+## Get user feed
 
-## Get User Feed
-
-```javascript
-const getuserfeed = socialMediaModule.getUserFeed('Shrek');
-console.log(`${finduser.userId}s Feed:`, getuserfeed);
-```
-
-### Parameters:
-- **_'Shrek'_** : User ID for which the feed is retrieved.
-
-## Get Post Comments
+### **_Note : This function requires the user to be logged in before usage_**
+This function retrieves the social media feed of the currently logged-in user. <br>
+It returns an array of posts from friends and followed accounts.
 
 ```javascript
-const firstpost = getuserfeed[0];
-const getpostcomment = socialMediaModule.getPostComments(firstpost.postId);
-console.log('Comments:', getpostcomment);
-```
+const getFeed = socialMediaModule.getUserFeed();
+console.log('Your Feed:', getFeed);
+``` 
 
-### Parameters:
-- **_firstpost.postId_** : Post ID for which comments are retrieved.
+## Post to social media
 
-## Get Post Likes
-
-```javascript
-const getpostlike = socialMediaModule.getPostLikes(firstpost.postId);
-console.log('Likes:', getpostlike);
-```
-
-### Parameters:
-- **_firstpost.postId_** : Post ID for which likes are retrieved.
-
-## Search User Posts
+### **_Note : This function requires the user to be logged in before usage_**
+This function allows the logged-in user to create a new post with a message and an image URL. <br>
+Takes in message and imageUrl as parameters.
 
 ```javascript
-const search = socialMediaModule.searchUserPosts('Shrek', 'green');
-console.log('Search Results:', search);
-```
+const newPost = socialMediaModule.postToSocialMedia('Hi', 'https://pic.url');
+console.log('New post:', newPost);
+``` 
 
-### Parameters:
-- **_'Shrek'_** : User ID whose posts are being searched.
-- **_'green'_** : Search term.
-
-## Add Comment to Post
+## Search user profile
+This function searches for a user profile based on the provided userId and returns information about the user, including their posts. <br>
+Takes in userId as paramater.
 
 ```javascript
-const addcomment = socialMediaModule.addCommentToPost(newpost.postId, 'Monkey', 'Support Shrek');
-console.log('New Comment:', addcomment);
-```
+const searchUser = socialMediaModule.searchUserProfile('Shrek');
+console.log('Search Results:', searchUser);
+``` 
 
-### Parameters:
-- **_newpost.postId_** : Post ID to which the comment is added.
-- **_'Monkey'_** : User ID adding the comment.
-- **_'Support Shrek'_** : Comment content.
+## Add commment to post
 
-## Add Like to Post
+### **_Note : This function requires the user to be logged in before usage_**
+This function allows the logged-in user to add a comment to a specific post identified by the postId.<br>
+Takes in postId as the parameter.
 
 ```javascript
-const addlike = socialMediaModule.addLikeToPost(newpost.postId, 'Monkey');
-console.log('New Like:', addlike);
+const newComment = socialMediaModule.addCommentToPost(searchUser.posts[0].postId, 'Hi');
+//An alternative
+//const newComment = socialMediaModule.addCommentToPost(getFeed[0].postId, 'Hi');
+console.log('New Comment:', newComment);
+``` 
 
-```
+## Add like to post
 
-### Parameters:
-- **_newpost.postId_** : Post ID to which the like is added.
-- **_'Monkey'_** : User ID adding the like.
+### **_Note : This function requires the user to be logged in before usage_**
+This function adds a like to a specific post identified by the postId.<br>
+Takes in postId as the parameter.
+
+```javascript
+const newLike = socialMediaModule.addLikeToPost(searchUser.posts[0].postId);
+//An alternative
+//const newLike = socialMediaModule.addLikeToPost(getFeed[0].postId);
+console.log('New Like:', newLike);
+``` 
+
+## Get post comments
+
+### **_Note : This function requires the user to be logged in before usage_**
+This function retrieves comments for a specific post identified by the postId.<br>
+Takes in postId as the parameter.
+
+```javascript
+const getComment = socialMediaModule.getPostComments(searchUser.posts[0].postId)
+//An alternative
+//const getComment = socialMediaModule.getPostComments(getFeed[0].postId);
+console.log('Post Comments:', getComment);
+``` 
+
+## Get post likes
+
+### **_Note : This function requires the user to be logged in before usage_**
+This function retrieves the list of users who liked a specific post identified by the postId.<br>
+Takes in postId as the parameter.
+
+```javascript
+const getLikes = socialMediaModule.getPostLikes(searchUser.posts[0].postId);
+//An alternative
+//const getLikes = socialMediaModule.getPostLikes(getFeed[0].postId);
+console.log('Post Likes:', getLikes);
+``` 
+
+## View own profile
+
+### **_Note : This function requires the user to be logged in before usage_**
+The viewOwnProfile function allows the logged-in user to view their own profile, including posts, comments, and likes.
+
+```javascript
+const viewProfile = socialMediaModule.viewOwnProfile();
+console.log(`${viewProfile.userId}:`, viewProfile);
+``` 
+
+## Log out 
+This function logs out the currently logged-in user.
+
+```javascript
+const logout = socialMediaModule.logout();
+console.log('Logout Result:', logout);
+``` 
