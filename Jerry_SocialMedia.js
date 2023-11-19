@@ -83,6 +83,13 @@ function generatePostId() {
 
 // Function to create a new user
 function createUser(userId, name, password, profilePicUrl) {
+  // Check if any of the parameters are empty
+  if (!userId || !name || !password || !profilePicUrl) {
+    return {
+      error: 'All fields must be provided'
+    };
+  }
+
   // Check if the user already exists
   const existingUser = users.find(user => user.userId === userId);
 
@@ -114,6 +121,13 @@ function createUser(userId, name, password, profilePicUrl) {
 
 // Function to log in a user and store in the session
 function login(userId, password) {
+  // Check if any of the parameters are empty
+  if (!userId || !password) {
+    return {
+      error: 'All fields must be provided'
+    };
+  }
+
   // Find the user with the given userId
   const user = users.find(user => user.userId === userId);
 
@@ -158,6 +172,13 @@ function logout() {
 
 // Function to post messages and images to social media
 function postToSocialMedia(message, imageUrl) {
+  // Check if any of the parameters are empty
+  if (!message || !imageUrl) {
+    return {
+      error: 'All fields must be provided'
+    };
+  }
+
   // Check if a user is logged in
   const loggedInUser = session.loggedInUser;
   if (!loggedInUser) {
@@ -187,6 +208,13 @@ function postToSocialMedia(message, imageUrl) {
 
 // Function to add a comment to a post
 function addCommentToPost(postId, comment) {
+  // Check if any of the parameters are empty
+  if (!postId || !comment) {
+    return {
+      error: 'All fields must be provided'
+    };
+  }
+
   // Check if a user is logged in
   const loggedInUser = session.loggedInUser;
     if (!loggedInUser) {
@@ -213,6 +241,13 @@ function addCommentToPost(postId, comment) {
 
 // Function to add a like to a post
 function addLikeToPost(postId) {
+  // Check if any of the parameters are empty
+  if (!postId) {
+    return {
+        error: 'All fields must be provided'
+      };
+  }
+
   // Check if a user is logged in
   const loggedInUser = session.loggedInUser;
     if (!loggedInUser) {
@@ -236,6 +271,13 @@ function addLikeToPost(postId) {
 
 // Function to search user profile
 function searchUserProfile(userId) {
+  // Check if any of the parameters are empty
+  if (!userId) {
+    return {
+      error: 'All fields must be provided'
+    };
+  }
+  
   // Find the user with the given userId
   const user = users.find(user => user.userId === userId);
 
@@ -269,6 +311,13 @@ function getUserFeed() {
 
 // Function to look up comments for a specific post
 function getPostComments(postId) {
+  // Check if any of the parameters are empty
+  if (!postId) {
+    return {
+      error: 'All fields must be provided'
+    };
+  }
+
   // Check if a user is logged in
   const loggedInUser = session.loggedInUser;
     if (!loggedInUser) {
@@ -284,6 +333,13 @@ function getPostComments(postId) {
 
 // Function to look up the list of users who liked a specific post
 function getPostLikes(postId) {
+  // Check if any of the parameters are empty
+  if (!postId) {
+    return {
+      error: 'All fields must be provided'
+    };
+  }
+  
   // Check if a user is logged in
   const loggedInUser = session.loggedInUser;
     if (!loggedInUser) {

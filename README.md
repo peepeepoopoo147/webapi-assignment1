@@ -65,7 +65,7 @@ const searchUser = socialMediaModule.searchUserProfile('Shrek');
 console.log('Search Results:', searchUser);
 ``` 
 
-## Add commment to post
+## Add comment to post
 
 ### **_Note : This function requires the user to be logged in before usage_**
 This function allows the logged-in user to add a comment to a specific post identified by the postId.<br>
